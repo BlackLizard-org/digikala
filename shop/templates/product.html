@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{product.picture.url}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">{{product.description}}</p>
+                    {% if product.is_sale %}
+                    <p class="card-text">💰قیمت:<strike>{{product.price}}</strike> - {{product.sale_price|intcomma}}</p>
+                    {% else %}
+                    <p class="card-text">💰قیمت:{{product.price|intcomma}}</p>
+                    {% endif %}
+                    تعداد:
+                    <select class="main-menu" id='cart-qty'>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    <div class="text-center">
+                        <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">بازگشت به صفحه اصلی</a>
+                    </div>
+                    <br><br>
+                    <div class="text-center">
+                        <button class="btn btn-secondary" type="button" id="add-cart" value="{{ product.id }}">
+                            اضافه کردن به سبد خرید
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<!-- Add to Cart Script -->
+<script>
+    $(document).on('click', '#add-cart', function(e){
+        e.preventDefault();
+        var productId = $(this).val();
+        var productQty = $('#cart-qty option:selected').val();
+
+        $.ajax({
+            method: 'POST',
+            url: '{% url "cart_add" %}',
+            data: {
+                product_id: productId,
+                product_qty: productQty,
+                csrfmiddlewaretoken: "{{ csrf_token }}",
+                action: "post"
+            },
+            success: function(response) {
+                document.getElementById('cart_quantity').textContent = response.qty;
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+            }
+        });
+    });
+</script>
+{% endblock %}

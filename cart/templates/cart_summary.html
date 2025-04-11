@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder text-white">سبد خرید شما</h1>
+            <p class="lead fw-normal text-white-50 mb-0">هرچی بخری اینجا اضافه میشه</p>
+        </div>
+    </div>
+</header>
+<br><br><br><br><br><br>
+{% if cart_products %}
+
+    {% for product in cart_products %}
+    <div class="container">
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{product.picture.url}}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{product.name}}</h5>
+                        <p class="card-text">{{product.description}}</p>
+                        {% if product.is_sale %}
+                        <p class="card-text">💰قیمت:<strike>{{product.price}}</strike> - {{product.sale_price|intcomma}}</p>
+                        {% else %}
+                        <p class="card-text">💰قیمت: {{product.price|intcomma}} تومان</p>
+                        {% endif %}
+                        <p class="card-text">تعداد:
+                            <select class="main-menu" id='select{{product.id}}'>
+                                {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                    <option selected>{{ value }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </p>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-primary update-cart">ویرایش</button>
+                        <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">حذف</button>
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="{% url 'home' %}">بازگشت به صفحه اصلی</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+<h3>مجموع کل سفارشات: {{total|intcomma}} تومان</h3>
+<br>
+<center>
+ <a href="{% url 'checkout' %}" class="btn btn-success">صورتحساب</a>
+</center>
+
+{% else %}
+<br><br>
+<center><h3>سبد خرید شما خالی است&#128546;</h3></center>
+{% endif %}
+<br><br><br><br><br>
+{% endblock %}
+<!-- Update Script -->
+<script src="./Update and Delete Scripts.js"></script>
+
+<!-- Delete Script -->
+
+
+
+
+
