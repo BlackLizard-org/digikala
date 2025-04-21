@@ -23,6 +23,7 @@ packaging==24.0
 pefile==2022.5.30
 pillow==10.4.0
 platformdirs==4.3.2
+psycopg2-binary>=2.9.9
 pyinstaller==5.13.2
 pyinstaller-hooks-contrib==2022.7
 pywin32-ctypes==0.2.0
