@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-0#7^hjncu&touxg%%8e!8e8c$9_)v87+64qwb9&7l8(4fyl!8i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://digikala-0zpk.onrender.com']
+ALLOWED_HOSTS = ['digikala-7j36.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
