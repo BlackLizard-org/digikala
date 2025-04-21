@@ -27,3 +27,4 @@ typing_extensions==4.12.2
 tzdata==2025.1
 uvicorn==0.34.2
 virtualenv==20.26.4
+whitenoise==6.9.0
